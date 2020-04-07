@@ -11,7 +11,7 @@
 
 <script>
 import TabBar from "@/components/common/TabBar.vue";
-import TabbarItem from "@/components/common/TabbarItem.vue";
+
 export default {
   data() {
     return {
@@ -24,8 +24,8 @@ export default {
     };
   },
   components: {
-    TabBar,
-    TabbarItem
+    TabBar
+    
   },
   //生命周期 - 创建完成（访问当前this实例）
   created() {},

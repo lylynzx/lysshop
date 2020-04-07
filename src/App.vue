@@ -30,7 +30,7 @@ export default {
 };
 </script>
 <style>
-/* 根据屏幕大小来修改根字体大小 配合rem */
+/* 根据屏幕大小来修改根字体大小 配合rem
 html {
   font-size: 20px;
 }
@@ -58,7 +58,7 @@ html {
   html {
     font-size: 40px !important;
   }
-}
+} */
 /* @import url(); 引入css类 */
 @import "./assets/css/normalize.css";
 @import "./assets/css/base.css";
