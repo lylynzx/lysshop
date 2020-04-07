@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-<div>this is the home page</div>
+<div>this is cartgory page</div>
 </template>
 
 <script>
