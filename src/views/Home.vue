@@ -112,7 +112,7 @@ export default {
       //console.log(this.$refs.homeTabControlTitle.$el);
       //console.log(res.y);
 
-      if (res.y < -350) {
+      if (res.y < -330) {
         this.$refs.homeTabControlTitle.classList.add("active");
       } else {
         this.$refs.homeTabControlTitle.classList.remove("active");

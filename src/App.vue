@@ -25,6 +25,7 @@ export default {
       document.addEventListener("gesturestart", function(event) {
         event.preventDefault();
       });
+      
     };
   }
 };
@@ -60,6 +61,8 @@ html {
   }
 } */
 /* @import url(); 引入css类 */
+/* 连续点击时报警告 加入下面这行解决 */
+* { touch-action: pan-y; }
 @import "./assets/css/normalize.css";
 @import "./assets/css/base.css";
 </style>

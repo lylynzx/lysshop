@@ -49,7 +49,7 @@ export default {
         this.bScroll && this.bScroll.finishPullUp();
     },
     refresh(){
-        console.log('bscroll refresh');
+        //console.log('bscroll refresh');
         
         this.bScroll && this.bScroll.refresh();
     }
@@ -69,6 +69,7 @@ export default {
         this.$emit('pullUpLoad');
     }),
     Pubsub.subscribe('refresh',()=>{
+      // console.log('bsroll refresh');
       this.refresh();
     })
   },

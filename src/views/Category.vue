@@ -1,14 +1,20 @@
 <!--  -->
 <template>
-<div>this is cartgory page</div>
+<div>this is cartgory page
+ 
+</div>
 </template>
 
 <script>
+
 export default {
 data() {
 return {
 
 }
+},
+components:{
+  
 },
 //生命周期 - 创建完成（访问当前this实例）
 created() {

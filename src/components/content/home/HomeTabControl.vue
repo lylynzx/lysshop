@@ -6,8 +6,9 @@
       class="recommenditem"
       v-for="item in recommendData[recommendData.activeItem].list"
       :key="item.acm"
+      @click.prevent="itemClick(item.iid)"
     >
-      <img :src="item.show.img" @load="imgload" />
+      <img v-lazy="item.show.img" @load="imgload" />
       <p>{{item.title}} {{item.price}}</p>
     </div>
   </div>
@@ -41,6 +42,16 @@ export default {
       this.timer = setTimeout(() => {
           Pubsub.publish('refresh')
       }, 200);
+    },
+    itemClick(data) {
+        console.log(data);
+        this.$router.push({
+            path:'/itemdetails',
+            query:{
+                iid:data
+            }
+        })
+        
     }
   },
   components: {
@@ -58,7 +69,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  margin-top: 20px;
+  /* margin-top: 20px; */
   background-color: #fff;
 }
 .recommenditem {
