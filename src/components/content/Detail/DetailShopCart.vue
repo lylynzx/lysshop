@@ -49,5 +49,6 @@ mounted() {
     text-align: center;
     color: white;
     font-weight: 700;
+    line-height: 50px;
 }
 </style>
