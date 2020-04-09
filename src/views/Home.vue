@@ -42,6 +42,8 @@ import betterScroll from "@/components/common/Better-scroll.vue";
 import Pubsub from "pubsub-js";
 //引入获取参数方法
 import { getHomeMultidata, getHomeGoods } from "@/network/home.js";
+import { AUTO_LOG_IN } from "@/store/mutation-type.js";
+import { getLocalStore } from "@/config/global.js";
 
 export default {
   data() {
@@ -55,7 +57,7 @@ export default {
         new: { page: 0, list: [] },
         pop: { page: 0, list: [] }
       },
-      scrollY:0
+      scrollY: 0
     };
   },
   components: {
@@ -130,6 +132,10 @@ export default {
     this.getHomeRecommend();
     this.getHomeRecommend("pop");
     this.getHomeRecommend("new");
+    //查看本地存储是否有登录信息，有则进行自动登录
+    if (getLocalStore("token") && getLocalStore("userInfo")) {
+      this.$store.commit(AUTO_LOG_IN);
+    }
   },
   //生命周期 - 挂载完成（访问DOM元素）
   mounted() {
@@ -140,22 +146,19 @@ export default {
       this.recommendData.activeItem = this.recommendTitles[data];
     });
   },
-  activated(){
-    console.log('activated');
-    console.log('reday scroll to'+this.scrollY);
+  activated() {
+    console.log("activated");
+    console.log("reday scroll to" + this.scrollY);
     this.$refs.myhomescroll.refresh();
-    this.$refs.myhomescroll.scrollTo(0,this.scrollY,0);
-    
+    this.$refs.myhomescroll.scrollTo(0, this.scrollY, 0);
   },
-  deactivated(){
-    console.log('deactivated');
+  deactivated() {
+    console.log("deactivated");
     console.log(this.$refs.myhomescroll.bScroll.y);
-    this.scrollY = this.$refs.myhomescroll.bScroll.y
-    
+    this.scrollY = this.$refs.myhomescroll.bScroll.y;
   },
-  destroyed(){
-    console.log('home destoryed');
-    
+  destroyed() {
+    console.log("home destoryed");
   }
 };
 </script>

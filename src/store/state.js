@@ -1,6 +1,6 @@
 export default {
     // 购物车数据
-    shopCart: {},
+    shopCart: [],
     // 用户信息
     userInfo: {},
     token:null

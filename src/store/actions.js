@@ -2,7 +2,8 @@
 import {
     LOG_IN,
     ADD_TO_CART,
-    CLEAR_CART
+    CLEAR_CART,
+    AUTO_LOG_IN
 } from '@/store/mutation-type.js'
 import {
     setLocalStore,
@@ -28,9 +29,10 @@ export default {
         p.then(res => {
             context.commit(LOG_IN, res);
             setLocalStore('token',res.token);
-            setLocalStore('userInfo',res.userInfo)
-        }).catch(res =>{
+            setLocalStore('userInfo',res.userInfo);
             
+        }).catch(res =>{
+
         });
         return p
 

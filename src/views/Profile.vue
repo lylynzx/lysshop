@@ -4,9 +4,10 @@
     this is the profile page
     <p v-if="token">welcome,{{userInfo.userName}}</p>
     <p v-else>welcome,stranger</p>
-
-    <button v-show="!token" @click="jumpToLogin">click to login</button>
-    <button v-show="token" @click="logOut">click to logout</button>
+    
+    <el-button type="primary" round @click="buysomething">buy something</el-button>
+    <el-button v-show="!token" round @click="jumpToLogin" type="success">click to login</el-button>
+    <el-button v-show="token" round @click="logOut" type="danger">click to logout</el-button>
   </div>
 </template>
 
@@ -34,6 +35,9 @@ export default {
         message: "Log Out success,jump to home page...",
         type: "success"
       });
+    },
+    buysomething(){
+        this.$store.commit('addMockShopInfo');
     }
   },
   //生命周期 - 创建完成（访问当前this实例）

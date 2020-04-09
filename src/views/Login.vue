@@ -7,7 +7,7 @@
       status-icon
       :rules="rules"
       ref="ruleForm"
-      label-width="80px"
+      label-width="120px"
       class="demo-ruleForm"
     >
       <el-form-item label="Phone Number" prop="phoneNumber">
@@ -22,6 +22,8 @@
         <el-button @click="resetForm('ruleForm')">重置</el-button>
       </el-form-item>
     </el-form>
+    <el-button type="info" round @click="clickToClose">click to close</el-button>
+    
   </div>
 </template>
 
@@ -98,6 +100,9 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
+    },
+    clickToClose(){
+        this.$router.go(-1)
     }
   }
 };
@@ -105,5 +110,8 @@ export default {
 }
 
 <style scoped>
+form {
+    padding: 3rem 1rem;
+}
 /* @import url(); 引入css类 */
 </style>
