@@ -17,9 +17,8 @@
       <detail-img :detailData="detailData"></detail-img>
     </better-scroll>
     <backtop class="detailBackTop" ref="mybacktop" @click.native="backTopClick" />
-    <detail-shop-cart></detail-shop-cart>
+    <detail-shop-cart @addToCart="addToCart"></detail-shop-cart>
   </div>
-  
 </template>
 
 <script>
@@ -31,11 +30,17 @@ import DetailSwiper from "@/components/content/Detail/DetailSwiper.vue";
 import DetailInfo from "@/components/content/Detail/DetailInfo.vue";
 import DetailService from "@/components/content/Detail/DetailService.vue";
 import DetailImg from "@/components/content/Detail/DetailImg.vue";
-import DetailShopCart from '@/components/content/Detail/DetailShopCart.vue'
+import DetailShopCart from "@/components/content/Detail/DetailShopCart.vue";
 //引入功能性组件
 import Backtop from "@/components/common/Back-top.vue";
 import betterScroll from "@/components/common/Better-scroll.vue";
 import Pubsub from "pubsub-js";
+
+//引入mapstate mapmutation
+import { mapState, mapMutations } from "vuex";
+
+//引入方法常量
+import { ADD_TO_CART } from "@/store/mutation-type.js";
 
 export default {
   data() {
@@ -58,6 +63,9 @@ export default {
       }
     };
   },
+  computed: {
+    ...mapState(["token", "shopCart"])
+  },
   components: {
     NavBar,
     DetailSwiper,
@@ -69,6 +77,7 @@ export default {
     DetailShopCart
   },
   methods: {
+    ...mapMutations([ADD_TO_CART]),
     openFullScreen2() {
       const loading = this.$loading({
         lock: true,
@@ -108,10 +117,50 @@ export default {
       this.$refs.mydetailscroll.scrollTo(0, 0, 500);
       this.$refs.mydetailscroll.refresh();
     },
-    detailTitleClicked(e){
-        console.log(e);
-        this.$refs.mydetailscroll.scrollTo(0,-e.target.dataset.index*501,300);
+    detailTitleClicked(e) {
+      console.log(e);
+      this.$refs.mydetailscroll.scrollTo(0, -e.target.dataset.index * 501, 300);
+    },
+    addToCart() {
+      if (this.token) {
+        let itemAmount = 0;
+        let item = this.shopCart.find(item => {
+          return item.iid == this.$route.query.iid;
+        });
+        console.log(item);
         
+        if (item) {
+          console.log(item.amount);
+          itemAmount = ++item.amount;
+          this.$store.commit(ADD_TO_CART,{iid:item.iid,
+          amount:item.amount})
+        } else {
+          itemAmount = 1;
+          let myShopCart = {
+            title: this.detailData.result.itemInfo.title,
+            price: this.detailData.result.itemInfo.highNowPrice,
+            img: this.detailData.result.itemInfo.topImages[0],
+            amount: itemAmount,
+            iid: this.$route.query.iid
+          };
+          this.$store.commit(ADD_TO_CART, myShopCart);
+        }
+        // console.log(this.shopCart);
+        // console.log(itemAmount);
+
+        this.$message({
+          message: "添加购物车成功",
+          type: "success"
+        });
+      } else {
+        this.$message({
+          message: "Please log in first...",
+          type: "warning"
+        });
+        setTimeout(() => {
+          this.$router.push("/login");
+        }, 500);
+      }
     }
   },
   //生命周期 - 创建完成（访问当前this实例）

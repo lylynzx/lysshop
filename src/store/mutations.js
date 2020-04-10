@@ -2,7 +2,8 @@ import {
     LOG_OUT,
     CLEAR_CART,
     LOG_IN,
-    AUTO_LOG_IN
+    AUTO_LOG_IN,
+    ADD_TO_CART
 } from './mutation-type'
 import {
     setLocalStore,
@@ -34,6 +35,29 @@ export default {
         state.userInfo = JSON.parse(getLocalStore('userInfo'));
         //console.log(JSON.parse(getLocalStore('userInfo')));
 
+    },
+    [ADD_TO_CART](state,payload) {
+        //console.log('mutations addtocart running');
+        //console.log(payload);
+        //这里判断购物车中是否有这个商品
+        // if(state.shopCart.find((item)=>{
+        //     return item.iid == payload.iid
+        // })) {
+        //     state.shopCart
+        // }
+        // state.shopCart.push(payload);
+        if(payload.title != undefined) {
+            state.shopCart.push(payload);
+        }else {
+            state.shopCart.forEach(element => {
+                if(element.iid ==payload.iid){
+                    element.amount = payload.amount
+                }
+            });
+        }
+        
+        setLocalStore('shopCart', state.shopCart);
+        
     },
     addMockShopInfo(state) {
         //以下为根据接口选择的三个商品作为购物车的初始假数据

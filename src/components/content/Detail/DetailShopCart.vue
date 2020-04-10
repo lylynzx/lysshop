@@ -1,22 +1,26 @@
 <!--  -->
 <template>
 <div class="detailShopCart">
-    <span @click="addtocart">加入购物车</span>
+    <span @click="addToCart">加入购物车</span>
     <span @click="purchase">立即购买</span>
 </div>
 </template>
 
 <script>
+// import {mapState} from 'vuex';
 export default {
 data() {
 return {
 
 }
 },
+computed:{
+    // ...mapState(['token','shopCart'])
+},
 methods:{
-    addtocart(){
+    addToCart(){
         console.log('addtocart');
-        
+        this.$emit('addToCart')
     },
     purchase(){
 

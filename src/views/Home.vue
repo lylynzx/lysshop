@@ -133,7 +133,7 @@ export default {
     this.getHomeRecommend("pop");
     this.getHomeRecommend("new");
     //查看本地存储是否有登录信息，有则进行自动登录
-    if (getLocalStore("token") && getLocalStore("userInfo")) {
+    if (!this.$store.state.token && getLocalStore("token") && getLocalStore("userInfo")) {
       this.$store.commit(AUTO_LOG_IN);
     }
   },

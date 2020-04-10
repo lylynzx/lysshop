@@ -1,8 +1,13 @@
 <!--  -->
 <template>
   <div>this is the cart page
+      <p v-show="!mycart">购物车是空的喔</p>
       <ul>
-          <li v-for="(item,index) in mycart" :key="index"></li>
+          <li v-for="(item,index) in mycart" :key="index">
+              <p>{{item.title}}</p>
+              <div> <span>￥{{item.price}}</span><span>数量：{{item.amount}}</span><span>总价：{{totalPrice[index]}}</span></div>
+              <img v-lazy="item.img" alt="">
+          </li>
       </ul>
   </div>
 </template>
@@ -14,6 +19,7 @@ import {
     removeLocalStore
 } from '@/config/global.js'
 import {mapState} from 'vuex';
+import LoginVue from './Login.vue';
 
 export default {
 data() {
@@ -22,11 +28,18 @@ return {
 }
 },
 computed:{
-    ...mapState(["token", "shopCart"])
+    ...mapState(["token", "shopCart"]),
+    totalPrice () {
+        return this.mycart.map(item =>{
+            return item.price * item.amount;
+        })
+    }
 },
 methods:{
     init_cart(){
         // console.log(this.token);
+        console.log('cart inited');
+        
         if(this.token) {
             if(getLocalStore('shopCart')) {
                 //如果有登录且有购物车信息，则添加进mycart中
@@ -46,5 +59,14 @@ mounted() {
 }
 </script>
 <style scoped>
+li {
+    width: 100%;
+}
+li img{
+    width: 100%;
+}
+li span {
+    margin: 0 1.5rem;
+}
 /* @import url(); 引入css类 */
 </style>
