@@ -83,8 +83,8 @@ export default {
     getHomeRecommend(type = "sell") {
       getHomeGoods(type, ++this.recommendData[type].page).then(data => {
         this.recommendData[type].list.push(...data.data.list);
-        console.log(data);
-        console.log(this.recommendData);
+        //console.log(data);
+        //console.log(this.recommendData);
       });
     },
     pulltoUpdate(type) {
@@ -133,28 +133,32 @@ export default {
     this.getHomeRecommend("pop");
     this.getHomeRecommend("new");
     //查看本地存储是否有登录信息，有则进行自动登录
-    if (!this.$store.state.token && getLocalStore("token") && getLocalStore("userInfo")) {
+    if (
+      !this.$store.state.token &&
+      getLocalStore("token") &&
+      getLocalStore("userInfo")
+    ) {
       this.$store.commit(AUTO_LOG_IN);
     }
   },
   //生命周期 - 挂载完成（访问DOM元素）
   mounted() {
     Pubsub.subscribe("itemclick", (msg, data) => {
-      console.log("msg=" + msg);
-      console.log("data=" + data);
+      //console.log("msg=" + msg);
+      //console.log("data=" + data);
       this.activeIndex = data;
       this.recommendData.activeItem = this.recommendTitles[data];
     });
   },
   activated() {
     console.log("activated");
-    console.log("reday scroll to" + this.scrollY);
+    //console.log("reday scroll to" + this.scrollY);
     this.$refs.myhomescroll.refresh();
     this.$refs.myhomescroll.scrollTo(0, this.scrollY, 0);
   },
   deactivated() {
     console.log("deactivated");
-    console.log(this.$refs.myhomescroll.bScroll.y);
+    //console.log(this.$refs.myhomescroll.bScroll.y);
     this.scrollY = this.$refs.myhomescroll.bScroll.y;
   },
   destroyed() {

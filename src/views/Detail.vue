@@ -130,7 +130,7 @@ export default {
         console.log(item);
         
         if (item) {
-          console.log(item.amount);
+          //console.log(item.amount);
           itemAmount = ++item.amount;
           this.$store.commit(ADD_TO_CART,{iid:item.iid,
           amount:item.amount})
@@ -166,7 +166,7 @@ export default {
   //生命周期 - 创建完成（访问当前this实例）
   created() {
     getDetailInfo(this.$route.query.iid).then(res => {
-      console.log(res);
+      //console.log(res);
       this.detailData = res;
     });
   },
