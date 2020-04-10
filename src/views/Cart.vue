@@ -3,17 +3,37 @@
   <div>
     this is the cart page
     <p v-show="!mycart">购物车是空的喔</p>
+
     <ul>
       <li v-for="(item,index) in mycart" :key="index">
-        <p>{{item.title}}</p>
-        <div>
-          <span>￥{{item.price}}</span>
-          <span>数量：{{item.amount}}</span>
-          <span>总价：{{totalPrice[index]}}</span>
-        </div>
-        <img v-lazy="item.img" alt />
+        <el-card class="box-card">
+          <div class="boxcontent">
+            <div>
+              <el-checkbox :checked="item.checked" @change="checkboxclick(item.iid)"></el-checkbox>
+            </div>
+            <div>
+              <img v-lazy="item.img" alt />
+            </div>
+            <div>
+              <p>{{item.title}}</p>
+              <div>
+                <span>￥{{item.price | tofix2}}</span>
+                <span>
+                  数量：
+                  <el-input-number
+                    @change="handleChange($event,item.iid)"
+                    v-model="item.amount"
+                    :min="1"
+                  ></el-input-number>
+                </span>
+                
+              </div>
+            </div>
+          </div>
+        </el-card>
       </li>
     </ul>
+    <p>总价：￥{{totalPrice | tofix2}}</p>
   </div>
 </template>
 
@@ -35,9 +55,19 @@ export default {
   computed: {
     ...mapState(["token", "shopCart"]),
     totalPrice() {
-      return this.mycart.map(item => {
-        return item.price * item.amount;
+      let price = 0;
+      this.shopCart.forEach(element => {
+        if (element.checked) {
+          price += Number(element.price) * Number(element.amount);
+        }
       });
+      return price;
+    },
+    
+  },
+  filters: {
+    tofix2(data) {
+      return Number(data).toFixed(2);
     }
   },
   methods: {
@@ -51,6 +81,13 @@ export default {
           this.mycart.push(...JSON.parse(getLocalStore("shopCart")));
         }
       }
+    },
+    checkboxclick(data) {
+      //console.log(data);
+      this.$store.commit("changeChecked", data);
+    },
+    handleChange(val, iid) {
+      this.$store.commit("changeAmount", { iid: iid, amount: val });
     }
   },
   //生命周期 - 创建完成（访问当前this实例）
@@ -66,13 +103,34 @@ export default {
 </script>
 <style scoped>
 li {
+  box-sizing: border-box;
+
   width: 100%;
+  height: 10rem;
+}
+.box-card {
+  margin: 0 auto;
+  width: 90%;
+  height: 15rem;
+}
+.boxcontent {
+  display: flex;
+}
+li .boxcontent div:first-of-type {
+  flex: 1;
+}
+li .boxcontent div:nth-of-type(2) {
+  flex: 4;
+}
+li .boxcontent div:nth-of-type(3) {
+  flex: 5;
 }
 li img {
   width: 100%;
+  height: 80%;
 }
-li span {
-  margin: 0 1.5rem;
+li p {
+  /* height: 2rem; */
 }
 /* @import url(); 引入css类 */
 </style>

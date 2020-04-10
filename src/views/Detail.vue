@@ -141,7 +141,8 @@ export default {
             price: this.detailData.result.itemInfo.highNowPrice,
             img: this.detailData.result.itemInfo.topImages[0],
             amount: itemAmount,
-            iid: this.$route.query.iid
+            iid: this.$route.query.iid,
+            checked:true
           };
           this.$store.commit(ADD_TO_CART, myShopCart);
         }
