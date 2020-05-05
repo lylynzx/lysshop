@@ -3,7 +3,7 @@ import axios from 'axios';
 export function request(config) {
     const instance = axios.create({
         //这里配置使用了corderwhy老师的服务器
-        baseURL:'http://152.136.185.210:8000/api/h8',
+        baseURL:'http://152.136.185.210:8000/api/n3',
         timeout:5000
     })
     

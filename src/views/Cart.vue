@@ -81,6 +81,9 @@ export default {
           this.mycart.push(...JSON.parse(getLocalStore("shopCart")));
         }
       }
+      if (getLocalStore('shopCart')){
+          
+      }
     },
     checkboxclick(data) {
       //console.log(data);
